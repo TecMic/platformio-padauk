@@ -9,8 +9,9 @@
 
 ```ini
 [env:development]
-platform = https://github.com/1500WK1500/platform-padauk.git
-board = ...
+platform = https://github.com/TecMic/platformio-padauk
+board = pfs154
+framework = easypdk
 ...
 ```
 

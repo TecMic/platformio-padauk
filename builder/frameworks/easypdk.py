@@ -41,7 +41,7 @@ env.Append(
         "--out-fmt-ihx"
     ],
     CPPPATH=[
-        join(FRAMEWORK_DIR, "includes")
+        join(FRAMEWORK_DIR, "include")
     ]
 )
 
