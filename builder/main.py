@@ -14,12 +14,7 @@ board_config = env.BoardConfig()
 
 # print the size of the binary programming file
 def sizePrintCMD(target, source, env):
-  print("Calculating size %s" % source[0])
-  print("Size of %s: %s bytes\n" % (source[0], source[0].get_size()))
-  print(env.get("FILESIZE"))
-  f = open("${FILESIZE}" , "w")
-  f.write(".data 1000")
-  f.close()
+  print("\nSize of %s:\n\t-- %s bytes (%s words) --\n" % (source[0], source[0].get_size(), source[0].get_size()/2))
 
 # A full list with the available variables
 # http://www.scons.org/doc/production/HTML/scons-user.html#app-variables
@@ -51,8 +46,8 @@ env.Replace(
 
     BINFILE = join("$BUILD_DIR", "${PROGNAME}.bin"),
     MAPFILE = join("$BUILD_DIR", "${PROGNAME}.map"),
-    #SIZECHECKCMD=['python', '-c', 'from os.path import getsize; print("CODE = %s" % getsize("${BINFILE}"))'],  # get flash size from bin file
-    SIZECHECKCMD=['${SIZETOOL}', '${MAPFILE}'],
+    SIZECHECKCMD=['python', '-c', 'from os.path import getsize; print("CODE = %s" % getsize("${BINFILE}"))'],  # get flash size from bin file
+    #SIZECHECKCMD=['${SIZETOOL}', '${MAPFILE}'],
     SIZEPROGREGEXP=r"^(?:CODE|GSINIT|GSFINAL|CONST|HOME|RSEG0|SSEG|HEADER1|HEADER3|PREG2)[^=]*\D+(\d+).*",
     SIZEDATAREGEXP=r"^(?:DATA)[^=]*\D+(\d+).*",
 
@@ -81,15 +76,13 @@ else:
 # Target: Print binary size
 #
 
-target_size = env.AddPlatformTarget(
-    "size",
-    target_bin,
-    sizePrintCMD,
-    "Program Size",
-    "Calculate program size",
+env.AddPlatformTarget(
+    name="file_size",
+    dependencies=target_bin,
+    actions=sizePrintCMD,
+    title="Program Size",
+    description="Calculate program size"
 )
-
-
 
 #
 # Target: Upload firmware
@@ -121,4 +114,4 @@ AlwaysBuild(env.Alias("upload", target_ihx, upload_actions))
 #
 # Target: Define targets
 #
-Default(target_bin, target_size)
+Default("file_size")

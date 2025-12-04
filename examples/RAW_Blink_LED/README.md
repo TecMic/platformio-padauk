@@ -24,5 +24,5 @@ A device specific include file (pdk/device/*.h) may need to be supplied for less
 
 ### Build Stats
 - Code Size: 87 words (174 bytes)
-- RAM usage: 7 bytes + stack
-  - All 7 bytes are used as method call parameters for the timing loop routines defined in the [delay.h](../include/delay.h) include file.
+- RAM usage: 4 bytes (overlayed 4 + 2 + 1) + stack
+  - All 4 bytes are used as method call parameters for the timing loop routines defined in the delay.h include file.

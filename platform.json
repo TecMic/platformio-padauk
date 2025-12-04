@@ -13,9 +13,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/1500WK1500/platform-padauk.git"
+    "url": "https://github.com/TecMic/platformio-padauk"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "frameworks": {
     "easypdk": {
       "package": "framework-easypdk",
@@ -25,16 +25,16 @@
   "packages": {
     "framework-easypdk": {
       "type": "framework",
-      "version": "https://github.com/1500WK1500/framework-easypdk.git"
+      "version": "https://github.com/TecMic/framework-easypdk"
     },
     "toolchain-sdcc": {
       "type": "toolchain",
       "owner": "platformio",
-      "version": "^1.40100.0"
+      "version": "^1.40200.0"
     },
     "tool-easypdkprog": {
       "type": "uploader",
-      "version": "https://github.com/1500WK1500/tool-easypdkprog-linux_x86_64.git"
+      "version": "https://github.com/TecMic/tool-easypdkprog"
     }
   }
 }
