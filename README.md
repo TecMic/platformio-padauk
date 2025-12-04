@@ -13,3 +13,6 @@ platform = https://github.com/1500WK1500/platform-padauk.git
 board = ...
 ...
 ```
+
+## Credits
+Based on [platform-padauk](https://github.com/1500WK1500/platform-padauk), Apache-2.0.
