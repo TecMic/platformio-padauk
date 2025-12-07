@@ -15,17 +15,27 @@
     "type": "git",
     "url": "https://github.com/TecMic/platformio-padauk"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "frameworks": {
     "easypdk": {
       "package": "framework-easypdk",
       "script": "builder/frameworks/easypdk.py"
+    },
+    "easypdk-hal": {
+      "package": "framework-easypdk-hal",
+      "script": "builder/frameworks/easypdk-hal.py"
     }
   },
   "packages": {
     "framework-easypdk": {
       "type": "framework",
+      "optional": false,
       "version": "https://github.com/TecMic/framework-easypdk"
+    },
+    "framework-easypdk-hal": {
+      "type": "framework",
+      "optional": true,
+      "version": "https://github.com/TecMic/framework-easypdk-hal"
     },
     "toolchain-sdcc": {
       "type": "toolchain",

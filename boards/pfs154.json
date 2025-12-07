@@ -7,7 +7,7 @@
     "cpu": "pdk14",
     "calibration_voltage": 4.0
   },
-  "frameworks": ["easypdk"],
+  "frameworks": ["easypdk", "easypdk-hal"],
   "upload": {
     "maximum_ram_size": 128,
     "maximum_size": 2048,
