@@ -14,7 +14,7 @@ board_config = env.BoardConfig()
 
 # print the size of the binary programming file
 def sizePrintCMD(target, source, env):
-  print("\nSize of %s:\n\t-- %s bytes (%s words) --\n" % (source[0], source[0].get_size(), source[0].get_size()/2))
+  print("\nSize of %s:\n\t-- %s bytes (%s words) --\n" % (source[0], source[0].get_size(), int(source[0].get_size()/2)))
 
 # A full list with the available variables
 # http://www.scons.org/doc/production/HTML/scons-user.html#app-variables
