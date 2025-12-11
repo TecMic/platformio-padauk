@@ -1,4 +1,4 @@
-# HAL BlinkLED Example
+# BlinkLED Example (HAL)
 
 This example demonstrates just about the simplest thing you can do: it blinks an LED, on for one second, then off for one second, repeatedly.
 
@@ -17,10 +17,10 @@ This means the negative leg (or cathode) of the LED is connected to the digital 
 ==This example is only tested with the PFS154 microcontroller!==
 
 ### Build Stats
-- Code Size: 166 words (332 bytes)
+- Code Size: 177 words (354 bytes)
 - RAM usage: 22 bytes + stack
   - 8 bytes system and other HAL variables
   - 2 bytes in the data region for the upTime value
   - 12 bytes in the overlayed area (min reserved size of HAL)
 
-See [easypdk-hal](https://github.com/TecMic/framework-easypdk-hal) for more info about the HAL lib.
+>See [easypdk-hal](https://github.com/TecMic/framework-easypdk-hal) for more info about the HAL lib.

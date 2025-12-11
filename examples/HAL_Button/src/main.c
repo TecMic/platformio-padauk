@@ -1,5 +1,5 @@
 /*
-  BlinkLED with HAL lib
+  Button interrupt example with HAL lib
 
   Turns an LED on for one second, then off for one second, repeatedly.
   Uses timer interrupts for the delay function.
@@ -8,6 +8,7 @@
 #include "hal_util.h"
 #include "hal_gpio.h"
 #include "hal_sys_timer.h"
+#include "hal_interrupt.h"
 #include "hal_startup.h"
 
 #include "startup.h"
@@ -16,13 +17,24 @@
 
 // LED is placed on the PA4 pin (Port A, Bit 4) with a current sink configuration
 #define LED_PIN         PA4
+// Button is placed on the PA0 pin (Port A, Bit 0) with internal pull-up
+#define BUTTON_PIN      PA0
 
 // LED is active low (current sink), so define helpers for better readability below
 #define turnLedOn(pin)  GPIO_PA_Write_Low(LED_PIN)
 #define turnLedOff(pin) GPIO_PA_Write_High(LED_PIN)
 
+
+bool interruptFlag;
+Timeout_t Timeout;
+
 void INTERRUPT_FUNCTION(void)
 {
+    if (IT_PA0_Check_Interrupt())
+    {
+        IT_PA0_Clear_Interrupt();
+        interruptFlag = true;
+    }
     SYS_TIME_Tick_Handler(); // Clear interrupt and increase millis
 }
 
@@ -30,18 +42,36 @@ void INTERRUPT_FUNCTION(void)
 void main(void)
 {
     // Initialize hardware
-    GPIO_PA_Init_Output(LED_PIN); // Set LED as output (all pins are input by default)
-    turnLedOff(LED_PIN);
+    GPIO_PA_Init_Output(LED_PIN);   // Set LED as output (all pins are input by default)
+    turnLedOff();
+
+    GPIO_PA_Init_Input(BUTTON_PIN); // Optional (input by default)
+    GPIO_PA_Enable_PullUp(BUTTON_PIN);
+    GPIO_PA_Enable_Digital_Input(BUTTON_PIN);   // Without this, only analog input is enabled
+    GPIO_PA_IntEdgeDetect(GPIO_PA0_IT_FALLING); // Default is rising/falling
+    IT_PA0_Enable_Interrupt();
+    IT_PA0_Clear_Interrupt();
 
     SYS_TIME_Init(); // Initialize timer for interrupt every ~ 1 ms
+
+    IT_Enable_Interrupts();
 
     // Main processing loop
     while (1)
     {
-        turnLedOn(LED_PIN);
-        Delay_ms(1000);
-        turnLedOff(LED_PIN);
-        Delay_ms(1000);
+        if (interruptFlag)
+        {
+            turnLedOn();
+            SYS_TIME_Set_Timeout(&Timeout, 1000);
+            interruptFlag = false;
+        }
+
+        if (SYS_TIME_Is_Timeout_Set(&Timeout) && SYS_TIME_Check_Timeout(&Timeout))
+        {
+            turnLedOff();
+        }
+
+        // do something else
     }
 }
 
