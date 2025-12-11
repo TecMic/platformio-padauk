@@ -8,6 +8,7 @@
 #include "hal_util.h"
 #include "hal_gpio.h"
 #include "hal_sys_timer.h"
+#include "hal_startup.h"
 
 #include "startup.h"
 #include "auto_sysclock.h"
@@ -22,7 +23,7 @@
 
 void INTERRUPT_FUNCTION(void)
 {
-    SYS_TIME_Tick_Handler(); // Clear interrupt and increase millis up
+    SYS_TIME_Tick_Handler(); // Clear interrupt and increase millis
 }
 
 // Main program
@@ -51,6 +52,10 @@ unsigned char STARTUP_FUNCTION(void)
     // The AUTO_INIT_SYSCLOCK() macro uses F_CPU (defined in the Makefile) to choose the IHRC or ILRC clock source and divider.
     // Alternatively, replace this with the more specific PDK_SET_SYSCLOCK(...) macro from pdk/sysclock.h
     AUTO_INIT_SYSCLOCK();
+
+    // All registers are in a undefined state at startup, so we clear the important ones
+    STARTUP_Set_Registers_Default();
+    // STARTUP_Set_Registers_Default_Optional();
 
     // Insert placeholder code to tell EasyPdkProg to calibrate the IHRC or ILRC internal oscillator.
     // The AUTO_CALIBRATE_SYSCLOCK(...) macro uses F_CPU (defined in the Makefile) to choose the IHRC or ILRC oscillator.

@@ -17,7 +17,7 @@ This means the negative leg (or cathode) of the LED is connected to the digital 
 ==This example is only tested with the PFS154 microcontroller!==
 
 ### Build Stats
-- Code Size: 175 words (350 bytes)
+- Code Size: 166 words (332 bytes)
 - RAM usage: 22 bytes + stack
   - 8 bytes system and other HAL variables
   - 2 bytes in the data region for the upTime value

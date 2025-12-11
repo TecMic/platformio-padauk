@@ -3,6 +3,7 @@ import re
 from SCons.Script import DefaultEnvironment
 
 env = DefaultEnvironment()
+board_config = env.BoardConfig()
 FRAMEWORK_DIR = Path(env.PioPlatform().get_package_dir("framework-easypdk-hal"))
 HAL_DIR = FRAMEWORK_DIR / "HAL"
 
@@ -92,6 +93,17 @@ def get_core_files() -> list[str]:
 # PlatformIO integration
 # ---------------------------------------------------------------------------
 
+linkflags = [
+    "-Wl-b IVECT = 0x0020",
+    "-Wl-b PIREG = 0x02",
+    "-Wl-b TMPSEG = 0x04",
+    "--data-loc 0x08",
+]
+code_loc = board_config.get("build", {}).get("code_loc")
+if code_loc:
+    print("Code will be placed at:", code_loc)
+    linkflags.append("--code-loc %s" % code_loc)
+
 env.Append(
     CFLAGS=[
         #"--no-c-code-in-asm",
@@ -101,13 +113,7 @@ env.Append(
         #"--nogcse"
     ],
     CPPDEFINES=[],
-    LINKFLAGS=[
-        "-Wl-b IVECT = 0x0020",
-        "--code-loc 0x0060",
-        "-Wl-b PIREG = 0x02",
-        "-Wl-b TMPSEG = 0x04",
-        "--data-loc 0x08",
-    ],
+    LINKFLAGS=linkflags,
     CPPPATH=[str(HAL_DIR)]
 )
 
