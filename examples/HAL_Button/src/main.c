@@ -48,7 +48,7 @@ void main(void)
     GPIO_PA_Init_Input(BUTTON_PIN); // Optional (input by default)
     GPIO_PA_Enable_PullUp(BUTTON_PIN);
     GPIO_PA_Enable_Digital_Input(BUTTON_PIN);   // Without this, only analog input is enabled
-    GPIO_PA_IntEdgeDetect(GPIO_PA0_IT_FALLING); // Default is rising/falling
+    IT_Set_Trigger_Edge(IT_EDGE_PA0_FALLING); 	// Default is rising/falling
     IT_PA0_Enable_Interrupt();
     IT_PA0_Clear_Interrupt();
 

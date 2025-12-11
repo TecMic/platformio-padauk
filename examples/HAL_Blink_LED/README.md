@@ -14,7 +14,7 @@ This means the negative leg (or cathode) of the LED is connected to the digital 
 >_*Note: Please consult the pinout for the specific microcontroller package used to identify the correct physical pin._
 
 ### Compatibility
-==This example is only tested with the PFS154 microcontroller!==
+<mark>This example is only tested with the PFS154 microcontroller!
 
 ### Build Stats
 - Code Size: 177 words (354 bytes)
