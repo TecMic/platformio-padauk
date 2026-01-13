@@ -5,6 +5,7 @@ from SCons.Script import DefaultEnvironment
 env = DefaultEnvironment()
 board_config = env.BoardConfig()
 FRAMEWORK_DIR = Path(env.PioPlatform().get_package_dir("framework-easypdk-hal"))
+PROJECT_INCLUDE_DIR = Path(env.subst("$PROJECT_INCLUDE_DIR"))
 HAL_DIR = FRAMEWORK_DIR / "HAL"
 
 # ---------------------------------------------------------------------------
@@ -114,7 +115,7 @@ env.Append(
     ],
     CPPDEFINES=[],
     LINKFLAGS=linkflags,
-    CPPPATH=[str(HAL_DIR)]
+    CPPPATH=[str(HAL_DIR), PROJECT_INCLUDE_DIR]
 )
 
 env.BuildSources(
